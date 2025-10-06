@@ -1,8 +1,24 @@
+import * as functions from "firebase-functions";
+import {initializeApp} from "firebase-admin/app";
+import {getFirestore} from "firebase-admin/firestore";
+import {UserRecord} from "firebase-admin/auth";
+import {logger} from "firebase-functions";
 
-import {onRequest} from "firebase-functions/https";
-import * as logger from "firebase-functions/logger";
+initializeApp();
+const firestore = getFirestore();
 
-export const helloWorld = onRequest((request, response) => {
-   logger.info("Hello logs!", {structuredData: true});
-   response.send("Hello from Firebase!");
- });
+export const createUser = functions.auth.user().onCreate(async (user: UserRecord) => {
+  const userInfo = {
+    uid: user.uid,
+    email: user.email,
+    photoUrl: user.photoURL,
+    displayName: user.displayName || null,
+  };
+
+  try {
+    await firestore.collection("users").doc(user.uid).set(userInfo);
+    logger.info(`User Created: ${JSON.stringify(userInfo)}`);
+  } catch (error) {
+    logger.error("Error creating user document:", error);
+  }
+});
