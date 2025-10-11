@@ -1,8 +1,10 @@
 import * as functions from "firebase-functions";
-import {initializeApp} from "firebase-admin/app";
-import {getFirestore} from "firebase-admin/firestore";
-import {UserRecord} from "firebase-admin/auth";
-import {logger} from "firebase-functions";
+import { initializeApp } from "firebase-admin/app";
+import { getFirestore } from "firebase-admin/firestore";
+import { UserRecord } from "firebase-admin/auth";
+import { logger } from "firebase-functions";
+
+
 
 initializeApp();
 const firestore = getFirestore();
