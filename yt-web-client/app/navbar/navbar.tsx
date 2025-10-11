@@ -8,6 +8,7 @@ import SignIn from "./sign-in";
 import { onAuthStateChangedHelper } from "../firebase/firebase";
 import { useEffect, useState } from "react";
 import { User } from "firebase/auth";
+import Upload from "./upload";
 
 // closure 
 
@@ -31,6 +32,10 @@ export default function Navbar() {
                 <Image width={100} height={70}
                     src="/logo.png" alt="VidPlay" />
             </Link>
+            {
+                user && <Upload />
+            }
+            
             <SignIn user={user}/>
         </nav>
     );
